@@ -1,29 +1,24 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import { Consumer } from './Context';
 import Counter from './Counter';
 
 class Player extends Component {
     render() {
-        const {
-            name,
-            score,
-            index,
-            id,
-            changeScore,
-            removePlayer
-        
-        } = this.props;
+        const { index } = this.props;
         return (
             <div className="player">
-                <span className="player-name">
-                    <button className="remove-player" onClick={() => removePlayer(id)}>✖</button>
-                    {name}</span>
-                <Counter
-                    score={score}
-                    index={index}
-                    changeScore={changeScore} 
-                />
-
+                <Consumer>
+                    {({ actions, players }) => (
+                        <span className="player-name">
+                            <button className="remove-player" onClick={() => actions.removePlayer(players[index].id)}>✖</button>
+                            {players[index].name}</span>
+                    )}
+                </Consumer>
+                <Counter index={index} />
             </div>
+
+
+
 
         );
     }

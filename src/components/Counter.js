@@ -1,13 +1,19 @@
 import React from 'react';
+import { Consumer } from './Context';
 
-const Counter = ({ score, index, changeScore }) => {
+const Counter = ({ index }) => {
     return (
-        <div className="counter">
-            <button className="counter-action decrement" onClick={() => changeScore(index, -1) }>-</button>
-            <span>{score}</span>
-            <button className="counter-action increment" onClick={() => changeScore(index, 1) }>+</button>
-        </div>
-    ); 
+        <Consumer>
+            {({ actions, players }) => (
+                <div className="counter">
+                    <button className="counter-action decrement" onClick={() => actions.scoreChange(index, -1)}>-</button>
+                    <span>{players[index].score}</span>
+                    <button className="counter-action increment" onClick={() => actions.scoreChange(index, 1)}>+</button>
+                </div>
+            )}
+        </Consumer>
+
+    );
 }
 
 export default Counter;
